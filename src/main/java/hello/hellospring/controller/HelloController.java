@@ -12,25 +12,30 @@ public class HelloController {
 
     @GetMapping("hello")
     public String hello(Model model){
-        model.addAttribute( "data", "hello!");
-        return "hello";
+        model.addAttribute("data", "hello!!");
+        return "hello"; // 기본적으로 rsc / templates/ hello(viewName)를 찾음.
     }
 
     @GetMapping("hello-mvc")
-    public String helloMvc(@RequestParam("name") String name, Model model){
-        model.addAttribute("name",name);
+    public String helloMVC(@RequestParam("name") String name, Model model){
+        model.addAttribute("name" , name);
         return "hello-template";
     }
 
-    @ResponseBody // Http body 부분에 return의 값을 넣어서 표현한다는 의미
-    @GetMapping("hello-spring")
+    @GetMapping("hello-string")
+    @ResponseBody // HTML없이 문자 그대로 표현해서 나타내는 방식.
     public String helloString(@RequestParam("name") String name){
-        return "hello "+name;
+
+        return "hello " + name + " !!!  ";
     }
 
-    @ResponseBody
     @GetMapping("hello-api")
-    public Hello
+    @ResponseBody
+    public Hello helloApi(@RequestParam("name") String name){
+        Hello hello = new Hello();
+        hello.setName(name);
+        return hello;
+    }
 
     static class Hello{
         private String name;
@@ -38,13 +43,8 @@ public class HelloController {
         public String getName() {
             return name;
         }
-
         public void setName(String name) {
             this.name = name;
         }
     }
-
-
-
-
 }
